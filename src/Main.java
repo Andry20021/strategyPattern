@@ -1,5 +1,6 @@
 import java.util.*;
 
+// for csc 3250
 class Course{
     private String _cnum;
     private int _credits;
