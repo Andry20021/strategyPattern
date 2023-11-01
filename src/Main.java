@@ -45,6 +45,7 @@ class AllItems <T> { // generic class, not needed for a strategy pattern just ma
     private ArrayList<T> _items;
 
     public AllItems(){_items = new ArrayList<T>();} // templating
+    public AllItems(int x){_items = new ArrayList<T>(x);} // this had to be added so we could have a default const in allstudents
 
     public void addItem (T t) {_items.add(t);}
     public <S> boolean isItem(S v, SearchBehavior<T, S> sb){
@@ -68,8 +69,9 @@ class AllItems <T> { // generic class, not needed for a strategy pattern just ma
     public int size () {return _items.size();}
     public void removeItem(int i ){
         if (i >= 0 && i < _items.size()) {
-            _items.remove(i);}
+            _items.remove(i);
         }
+    }
     public T getItem (int i) {return _items.get(i);}
 
 
@@ -80,6 +82,9 @@ class AllStudents{
     public AllStudents(){
         _students = new AllItems<Student>();// use students here so the template variable is set to Student
     }
+    public AllStudents(int x) {
+        _students = new AllItems<Student>(x);
+    }
     public void addStudent(String id){
         _students.addItem(new Student(id));
     }
@@ -88,6 +93,19 @@ class AllStudents{
     }
     public int findStudent(String id){
         return _students.findItem(id, new StudentSearch());
+    }
+    public int size () {
+        return _students.size();
+    }
+    public boolean modifyStudentID (String id, String nid) {
+        int idx = findStudent(id);
+        if (idx < 0) {
+            return false;
+        }
+        else {
+            _students.getItem(idx).setID(nid);
+            return true;
+        }
     }
     public void removeStudent(String id){
         int i = _students.findItem(id, new StudentSearch());
@@ -105,6 +123,9 @@ class AllCourses{
     public AllCourses(){
         _courses = new AllItems<Course>();
     }
+    public AllCourses(int x) {
+        _courses = new AllItems<Course>(x);
+    }
     public void addCourse(String cnum, int c){
         _courses.addItem(new Course(cnum, c));
     }
@@ -113,6 +134,19 @@ class AllCourses{
     }
     public int findCourse(String cnum){
         return _courses.findItem(cnum, new CourseSearch());
+    }
+    public int size () {
+        return _courses.size();
+    }
+    public boolean modifyCourseNum (String cnum, String ncnum) {
+        int idx = findCourse(cnum);
+        if (idx < 0) {
+            return false;
+        }
+        else {
+            _courses.getItem(idx).setNumber(ncnum);
+            return true;
+        }
     }
     public void removeCourse(String cnum){
         int i = _courses.findItem(cnum, new CourseSearch());
